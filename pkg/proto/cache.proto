@@ -1,0 +1,47 @@
+// compile: protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative proto/cache.proto; protoc-go-inject-tag --input=proto/cache.pb.go
+// request: grpcurl -proto proto/cache.proto -plaintext -d '{"id": 1}' localhost:50051 proto.UserService/GetUser
+// request: grpcurl -proto proto/cache.proto -plaintext -d '{"id": 1}' localhost:50051 proto.UserService/GetUsers
+
+syntax = "proto3";
+
+package proto;
+
+option go_package = "cache/proto;proto";
+
+import "google/protobuf/wrappers.proto";
+
+service UserService{
+    rpc GetUser (GetUserReq) returns (GetUserResp) {}
+    rpc GetUsers (GetUserReq) returns (GetUsersResp) {}
+    rpc SetUser (GetUserReq) returns (GetUsersResp) {}
+}
+
+// TODO: add the errno.
+message Response {
+    int32 code = 1;
+    string msg = 2;
+}
+
+message User {
+    int32 id = 1;  // @gotags: mapstructure:"id"
+    string name = 2;  // @gotags: mapstructure:"name"
+    bool sex = 3;  // @gotags: mapstructure:"sex"
+    int32 age = 4;  // @gotags: mapstructure:"age"
+    int32 orgid = 5; // @gotags: mapstructure:"orgid"
+}
+
+message GetUserResp {
+    User user = 1;  // @gotags: mapstructure:"user"
+}
+
+message GetUsersResp {
+    repeated User users = 1;  // @gotags: mapstructure:"users"
+}
+
+
+message GetUserReq {
+    // optional
+    google.protobuf.Int32Value id = 1;
+    // optional
+    google.protobuf.StringValue name=2;
+}

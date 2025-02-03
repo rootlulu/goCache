@@ -1,0 +1,22 @@
+// compile: protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative pb/reflog.proto; protoc-go-inject-tag --input=pb/reflog.pb.go
+// request: grpcurl -proto pb/reflog.proto -plaintext -d '{"req": "a b"}' localhost:29991 pb.ReflogService/Reflog
+
+syntax = "proto3";
+
+package pb;
+
+option go_package = "reflog/pb;pb";
+
+
+message Request {
+    string req = 1;
+}
+
+message Response {
+    int32 code = 1;
+    string resp = 2;
+}
+
+service ReflogService{
+    rpc Reflog (Request) returns (Response) {}
+}

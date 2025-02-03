@@ -1,0 +1,11 @@
+mysql:
+  host: localhost
+  port: 3306
+  username: root
+  password: xNTpIpkLKZSgUvfhTqu/8g==  # todo: encrypt
+  database: user
+  # uri: "root:luban666.@tcp(localhost:3306)/user"
+  uri: "wLDXTtRYJcOhS0Zo7lCmF17gQ92Rd+qQqwy0T71B2XotwohNzHvNO+1WCK924xrB"
+grpc: # TODO
+  host: localhost
+  port: 50051
